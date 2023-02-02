@@ -11,8 +11,25 @@
 #endif
 
 #ifdef WIN32
+/* WINVER and _WIN32_WINNT have to be greater or equal to 0x0600 for
+   CreateSymbolicLinkA to work on MinGW */
+#	ifdef WINVER
+#		if WINVER < 0x0600
+#			undef  WINVER
+#			define WINVER 0x0600
+#		endif
+#	endif
+
+#	ifdef _WIN32_WINNT
+#		if _WIN32_WINNT < 0x0600
+#			undef  _WIN32_WINNT
+#			define _WIN32_WINNT 0x0600
+#		endif
+#	endif
+
 #	include <windows.h>
 
+/* Guarantee PATH_MAX to be defined */
 #	ifndef PATH_MAX
 #		ifndef MAX_PATH
 #			define PATH_MAX 1024
@@ -26,6 +43,7 @@
 #	include <sys/stat.h>
 #	include <sys/types.h>
 
+/* Guarantee PATH_MAX to be defined */
 #	ifndef PATH_MAX
 #		define PATH_MAX 1024
 #	endif
@@ -66,7 +84,10 @@ typedef struct {
 
 fs_attr_t   fs_attr(const     char *path);
 const char *fs_basename(const char *path);
+const char *fs_ext(const      char *path);
 bool        fs_exists(const   char *path);
+
+int fs_create_link(const char *path, const char *target, bool is_dir);
 
 int fs_dir_open(fs_dir_t *d, const char *path);
 int fs_dir_close(fs_dir_t *d);
@@ -93,6 +114,14 @@ const char *fs_basename(const char *path) {
 	return path;
 }
 
+const char *fs_ext(const char *path) {
+	for (size_t i = strlen(path) - 1; i > 0; -- i) {
+		if (path[i] == '.')
+			return path + i + 1;
+	}
+	return path;
+}
+
 fs_attr_t fs_attr(const char *path) {
 	fs_attr_t   attr = FS_REGULAR;
 	const char *base = fs_basename(path);
@@ -101,25 +130,37 @@ fs_attr_t fs_attr(const char *path) {
 	WORD attrs = GetFileAttributesA(path);
 
 	if (attrs & FILE_ATTRIBUTE_HIDDEN || strcmp(base, ".") == 0 || strcmp(base, "..") == 0)
-		attr |= FS_HIDDEN;
+		attr = (fs_attr_t)((int)attr | (int)FS_HIDDEN);
 	if (attrs & FILE_ATTRIBUTE_DIRECTORY)
-		attr |= FS_DIR;
+		attr = (fs_attr_t)((int)attr | (int)FS_DIR);
 	if (attrs & FILE_ATTRIBUTE_REPARSE_POINT)
-		attr |= FS_LINK;
+		attr = (fs_attr_t)((int)attr | (int)FS_LINK);
 #else
 	struct stat s;
 	if (stat(path, &s) != 0)
 		return FS_INVALID_ATTR;
 
 	if (base[0] == '.')
-		attr |= FS_HIDDEN;
+		attr = (fs_attr_t)((int)attr | (int)FS_HIDDEN);
 	if (S_ISDIR(s.st_mode))
-		attr |= FS_DIR;
+		attr = (fs_attr_t)((int)attr | (int)FS_DIR);
 	if (S_ISLNK(s.st_mode))
-		attr |= FS_LINK;
+		attr = (fs_attr_t)((int)attr | (int)FS_LINK);
 #endif
 
 	return attr;
+}
+
+int fs_create_link(const char *path, const char *target, bool is_dir) {
+#ifdef WIN32
+	if (!CreateSymbolicLinkA(path, target, is_dir? SYMBOLIC_LINK_FLAG_DIRECTORY : 0))
+		return -1;
+
+	return 0;
+#else
+	(void)is_dir;
+	return symlink(target, path);
+#endif
 }
 
 int fs_dir_open(fs_dir_t *d, const char *path) {
