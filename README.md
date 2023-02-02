@@ -12,7 +12,6 @@
 		<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/LordOfTrident/cfs?color=4f79e4"/>
 	</a>
 	<br><br><br>
-	<img width="75%" src="res/img.png"/>
 </p>
 
 A simple single-header STB-style cross-platform C filesystem library.
