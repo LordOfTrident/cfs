@@ -6,19 +6,19 @@
 
 int main(int argc, char **argv) {
 	if (argc < 2) {
-		fprintf(stderr, "List all files in a directory\nUsage: %s DIR_PATH\n", argv[0]);
+		fprintf(stderr, "List all files in a directory\nUsage: %s PATH\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 
-	const char *dir_path = argv[1];
-	if (!fs_exists(dir_path)) {
-		fprintf(stderr, "Error: directory '%s' does not exist\n", dir_path);
+	const char *path = argv[1];
+	if (!fs_exists(path)) {
+		fprintf(stderr, "Error: directory '%s' does not exist\n", path);
 		return EXIT_FAILURE;
 	}
 
 	fs_dir_t dir;
-	if (fs_dir_open(&dir, dir_path) != 0) {
-		fprintf(stderr, "Error: could open dir '%s'\n", dir_path);
+	if (fs_dir_open(&dir, path) != 0) {
+		fprintf(stderr, "Error: could not open dir '%s'\n", path);
 		return EXIT_FAILURE;
 	}
 

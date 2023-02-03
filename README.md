@@ -43,12 +43,16 @@ int main(void) {
 
 ## Quickstart
 Just copy [`cfs.h`](./cfs.h) into your project and include it.
-[See the example](./examples/main.c) to see how to use the library.
+[See the examples](./examples) to see how to use the library.
 
-To compile and run the example, run
+To compile and run the examples, run
 ```sh
-$ cc ./examples/main.c -o main
-$ ./main
+$ cc ./examples/ls.c -o ls
+$ cc ./examples/copy.c -o copy
+$ cc ./examples/link.c -o link
+$ ./ls
+$ ./copy
+$ ./link
 ```
 
 ## Bugs
