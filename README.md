@@ -14,7 +14,7 @@
 	<br><br><br>
 </p>
 
-A simple single-header STB-style cross-platform C filesystem library.
+A simple single-header [STB-style](https://github.com/nothings/stb) cross-platform C filesystem library.
 
 ## Table of contents
 * [Simple example](#simple-example)
