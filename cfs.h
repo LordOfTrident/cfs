@@ -83,25 +83,25 @@ typedef struct {
 	int         attr;
 } fs_ent_t;
 
-int         fs_attr(const     char *path);
+int         fs_attr(    const char *path);
 const char *fs_basename(const char *path);
-const char *fs_ext(const      char *path);
-bool        fs_exists(const   char *path);
+const char *fs_ext(     const char *path);
+bool        fs_exists(  const char *path);
 
 int fs_read_link(const char *path, char *buf, size_t size, size_t *written);
 
 int fs_create_link(const char *path, const char *target, bool is_dir);
-int fs_create_dir(const char  *path);
+int fs_create_dir( const char *path);
 
 int fs_remove_file(const char *path);
-int fs_remove_dir(const char  *path);
+int fs_remove_dir( const char *path);
 
 int fs_copy(const char *path, const char *new);
 int fs_move(const char *path, const char *new);
 
-int fs_dir_open(fs_dir_t *d, const char *path);
+int fs_dir_open( fs_dir_t *d, const char *path);
 int fs_dir_close(fs_dir_t *d);
-int fs_dir_next(fs_dir_t *d, fs_ent_t *e);
+int fs_dir_next( fs_dir_t *d, fs_ent_t *e);
 
 #endif
 
