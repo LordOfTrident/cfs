@@ -1,6 +1,4 @@
 <h1 align="center">cfs</h1>
-<p align="center">A cross-platform filesystem library for C</p>
-
 <p align="center">
 	<a href="./LICENSE">
 		<img alt="License" src="https://img.shields.io/badge/license-GPL-blue?color=26d374"/>
@@ -11,6 +9,7 @@
 	<a href="https://github.com/LordOfTrident/cfs/pulls">
 		<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/LordOfTrident/cfs?color=4f79e4"/>
 	</a>
+	<img width="80%" src="res/thumbnail.png"/>
 	<br><br><br>
 </p>
 
@@ -40,6 +39,9 @@ int main(void) {
 	return 0;
 }
 ```
+Output
+
+<img width="25%" src="res/img.png"/>
 
 ## Quickstart
 Just copy [`cfs.h`](./cfs.h) into your project and include it.
