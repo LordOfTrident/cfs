@@ -1,4 +1,9 @@
-/* #define CFS_IMPLEMENTATION */
+/*
+ * https://github.com/LordOfTrident/cfs
+ *
+ * #define CFS_IMPLEMENTATION
+ *
+ */
 
 #ifndef CFS_HEADER_GUARD
 #define CFS_HEADER_GUARD
