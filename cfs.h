@@ -4,6 +4,10 @@
 #include <stdbool.h> /* bool, true, false */
 #include <string.h>  /* strcpy, strcat, memset */
 
+#define CFS_VERSION_MAJOR 1
+#define CFS_VERSION_MINOR 0
+#define CFS_VERSION_PATCH 0
+
 #ifndef WIN32
 #	if defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #		define WIN32
