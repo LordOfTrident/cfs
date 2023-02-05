@@ -1,3 +1,5 @@
+/* #define CFS_IMPLEMENTATION */
+
 #ifndef CFS_HEADER_GUARD
 #define CFS_HEADER_GUARD
 
