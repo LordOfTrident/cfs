@@ -8,12 +8,16 @@
 #ifndef CFS_HEADER_GUARD
 #define CFS_HEADER_GUARD
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h> /* bool, true, false */
 #include <string.h>  /* strlen, strcpy, memcpy, strcat, memset */
 #include <stdlib.h>  /* malloc */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 2
+#define CFS_VERSION_MINOR 3
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -114,16 +118,24 @@ int fs_create_dir( const char *path);
 int fs_remove_file(const char *path);
 int fs_remove_dir( const char *path);
 
-int fs_copy(const char *path, const char *new);
-int fs_move(const char *path, const char *new);
+int fs_copy(const char *path, const char *new_);
+int fs_move(const char *path, const char *new_);
 
 int fs_dir_open( fs_dir_t *d, const char *path);
 int fs_dir_close(fs_dir_t *d);
 int fs_dir_next( fs_dir_t *d, fs_ent_t *e);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif
 
 #ifdef CFS_IMPLEMENTATION
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 bool fs_exists(const char *path) {
 #ifdef WIN32
@@ -250,9 +262,9 @@ int fs_remove_file(const char *path) {
 #endif
 }
 
-int fs_copy(const char *path, const char *new) {
+int fs_copy(const char *path, const char *new_) {
 #ifdef WIN32
-	return !CopyFileA(path, new, true)? -1 : 0;
+	return !CopyFileA(path, new_, true)? -1 : 0;
 #else
 	/* https://stackoverflow.com/questions/2180079/how-can-i-copy-a-file-on-unix-using-c */
 	int to, from;
@@ -261,7 +273,7 @@ int fs_copy(const char *path, const char *new) {
 	if (from < 0)
 		return -1;
 
-	to = open(new, O_WRONLY | O_CREAT | O_EXCL, 0666);
+	to = open(new_, O_WRONLY | O_CREAT | O_EXCL, 0666);
 	if (to < 0) {
 		close(from);
 		return -1;
@@ -298,11 +310,11 @@ int fs_copy(const char *path, const char *new) {
 #endif
 }
 
-int fs_move(const char *path, const char *new) {
+int fs_move(const char *path, const char *new_) {
 #ifdef WIN32
-	return !MoveFileA(path, new)? -1 : 0;
+	return !MoveFileA(path, new_)? -1 : 0;
 #else
-	return rename(path, new) != 0? -1 : 0;
+	return rename(path, new_) != 0? -1 : 0;
 #endif
 }
 
@@ -370,5 +382,10 @@ int fs_dir_next(fs_dir_t *d, fs_ent_t *e) {
 
 	return 0;
 }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

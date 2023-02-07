@@ -10,16 +10,16 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	const char *path = argv[1], *new  = argv[2];
+	const char *path = argv[1], *new_  = argv[2];
 	if (!fs_exists(path)) {
 		fprintf(stderr, "Error: file '%s' does not exist\n", path);
 		return EXIT_FAILURE;
 	}
 
-	if (fs_copy(path, new) != 0) {
-		fprintf(stderr, "Error: could not copy file '%s' to '%s'\n", path, new);
+	if (fs_copy(path, new_) != 0) {
+		fprintf(stderr, "Error: could not copy file '%s' to '%s'\n", path, new_);
 		return EXIT_FAILURE;
 	}
-	printf("Succesfully copied '%s' to '%s'\n", path, new);
+	printf("Succesfully copied '%s' to '%s'\n", path, new_);
 	return EXIT_SUCCESS;
 }
