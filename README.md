@@ -53,10 +53,12 @@ $ cc ./examples/ls.c -o ls
 $ cc ./examples/copy.c -o copy
 $ cc ./examples/link.c -o link
 $ cc ./examples/join.c -o join
+$ cc ./examples/foreach.c -o foreach
 $ ./ls
 $ ./copy
 $ ./link
 $ ./join
+$ ./foreach
 ```
 
 ## Bugs

@@ -18,7 +18,7 @@ extern "C" {
 #include <stdarg.h>  /* va_list, va_start, va_end, va_arg */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 4
+#define CFS_VERSION_MINOR 5
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -103,6 +103,18 @@ typedef struct {
 	const char *name;
 	int         attr;
 } fs_ent_t;
+
+#define FOREACH_IN_DIR(PATH, DIR_VAR, ENT_VAR, BODY, STATUS) \
+	do { \
+		fs_dir_t DIR_VAR; \
+		STATUS = fs_dir_open(&DIR_VAR, PATH); \
+		if (STATUS == 0) { \
+			fs_ent_t ENT_VAR; \
+			while (fs_dir_next(&DIR_VAR, &ENT_VAR) == 0) \
+				BODY \
+			fs_dir_close(&DIR_VAR); \
+		} \
+	} while (0)
 
 #define FS_JOIN_PATH(...) fs_join_path(__VA_ARGS__, NULL)
 char *fs_join_path(const char *base, ...);
