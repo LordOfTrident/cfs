@@ -9,10 +9,11 @@
 #define CFS_HEADER_GUARD
 
 #include <stdbool.h> /* bool, true, false */
-#include <string.h>  /* strcpy, strcat, memset */
+#include <string.h>  /* strlen, strcpy, memcpy, strcat, memset */
+#include <stdlib.h>  /* malloc */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 0
+#define CFS_VERSION_MINOR 1
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -99,6 +100,8 @@ const char *fs_basename(const char *path);
 const char *fs_ext(     const char *path);
 bool        fs_exists(  const char *path);
 
+char *fs_remove_ext(const char *path);
+
 int fs_read_link(const char *path, char *buf, size_t size, size_t *written);
 
 int fs_create_link(const char *path, const char *target, bool is_dir);
@@ -170,6 +173,20 @@ int fs_attr(const char *path) {
 #endif
 
 	return attr;
+}
+
+char *fs_remove_ext(const char *path) {
+	const char *ext = fs_ext(path);
+	size_t len      = strlen(path) - strlen(ext) - 1;
+
+	char *removed = (char*)malloc(len + 1);
+	if (removed == NULL)
+		return NULL;
+
+	memcpy(removed, path, len);
+	removed[len] = '\0';
+
+	return removed;
 }
 
 int fs_read_link(const char *path, char *buf, size_t size, size_t *written) {

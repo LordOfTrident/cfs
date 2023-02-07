@@ -44,7 +44,7 @@ Output
 <img width="25%" src="res/img.png"/>
 
 ## Quickstart
-Just copy [`cfs.h`](./cfs.h) into your project and include it.
+Just copy [`cfs.h`](./cfs.h) into your project or submodule this repository and include the header.
 [See the examples](./examples) to see how to use the library.
 
 To compile and run the examples, run
