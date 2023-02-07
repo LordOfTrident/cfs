@@ -15,9 +15,10 @@ extern "C" {
 #include <stdbool.h> /* bool, true, false */
 #include <string.h>  /* strlen, strcpy, memcpy, strcat, memset */
 #include <stdlib.h>  /* malloc */
+#include <stdarg.h>  /* va_list, va_start, va_end, va_arg */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 3
+#define CFS_VERSION_MINOR 4
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -103,6 +104,9 @@ typedef struct {
 	int         attr;
 } fs_ent_t;
 
+#define FS_JOIN_PATH(...) fs_join_path(__VA_ARGS__, NULL)
+char *fs_join_path(const char *base, ...);
+
 int         fs_attr(    const char *path);
 const char *fs_basename(const char *path);
 const char *fs_ext(     const char *path);
@@ -136,6 +140,36 @@ int fs_dir_next( fs_dir_t *d, fs_ent_t *e);
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+char *fs_join_path(const char *base, ...) {
+	size_t len = strlen(base);
+
+	va_list args;
+	va_start(args, base);
+	for (const char *next = va_arg(args, const char*);
+	     next != NULL;
+	     next = va_arg(args, const char*)) {
+		len += strlen(next) + 1;
+	}
+	va_end(args);
+
+	char *buf = (char*)malloc(len + 1);
+	if (buf == NULL)
+		return NULL;
+
+	strcpy(buf, base);
+
+	va_start(args, base);
+	for (const char *next = va_arg(args, const char*);
+	     next != NULL;
+	     next = va_arg(args, const char*)) {
+		strcat(buf, PATH_SEP);
+		strcat(buf, next);
+	}
+	va_end(args);
+
+	return buf;
+}
 
 bool fs_exists(const char *path) {
 #ifdef WIN32

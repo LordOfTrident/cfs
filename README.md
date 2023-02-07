@@ -52,9 +52,11 @@ To compile and run the examples, run
 $ cc ./examples/ls.c -o ls
 $ cc ./examples/copy.c -o copy
 $ cc ./examples/link.c -o link
+$ cc ./examples/join.c -o join
 $ ./ls
 $ ./copy
 $ ./link
+$ ./join
 ```
 
 ## Bugs
