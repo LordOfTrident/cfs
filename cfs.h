@@ -13,7 +13,7 @@
 #include <stdlib.h>  /* malloc */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 1
+#define CFS_VERSION_MINOR 2
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -49,6 +49,8 @@
 #			define PATH_MAX MAX_PATH
 #		endif
 #	endif
+
+#	define PATH_SEP "\\"
 #else
 #	include <unistd.h>
 #	include <dirent.h>
@@ -60,6 +62,8 @@
 #	ifndef PATH_MAX
 #		define PATH_MAX 1024
 #	endif
+
+#	define PATH_SEP "/"
 #endif
 
 enum {
