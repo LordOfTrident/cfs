@@ -18,7 +18,7 @@ extern "C" {
 #include <stdarg.h>  /* va_list, va_start, va_end, va_arg */
 
 #define CFS_VERSION_MAJOR 1
-#define CFS_VERSION_MINOR 5
+#define CFS_VERSION_MINOR 6
 #define CFS_VERSION_PATCH 0
 
 #ifndef WIN32
@@ -125,6 +125,7 @@ const char *fs_ext(     const char *path);
 bool        fs_exists(  const char *path);
 
 char *fs_remove_ext(const char *path);
+char *fs_replace_ext(const char *path, const char *new_ext);
 
 int fs_read_link(const char *path, char *buf, size_t size, size_t *written);
 
@@ -249,6 +250,27 @@ char *fs_remove_ext(const char *path) {
 	removed[len] = '\0';
 
 	return removed;
+}
+
+char *fs_replace_ext(const char *path, const char *new_ext) {
+	size_t len = strlen(path);
+	for (size_t i = len - 1; i != (size_t)-1; -- i) {
+		if (path[i] == '.') {
+			len = i;
+			break;
+		}
+	}
+
+	size_t ext_len = strlen(new_ext);
+	char  *str     = (char*)malloc(len + ext_len + 2);
+	if (str == NULL)
+		return NULL;
+
+	memcpy(str, path, len);
+	str[len]     = '.';
+	str[len + 1] = '\0';
+	strcat(str, new_ext);
+	return str;
 }
 
 int fs_read_link(const char *path, char *buf, size_t size, size_t *written) {
