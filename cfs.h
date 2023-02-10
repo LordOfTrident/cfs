@@ -19,7 +19,7 @@ extern "C" {
 
 #define CFS_VERSION_MAJOR 1
 #define CFS_VERSION_MINOR 6
-#define CFS_VERSION_PATCH 0
+#define CFS_VERSION_PATCH 1
 
 #ifndef WIN32
 #	if defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -373,6 +373,12 @@ int fs_copy(const char *path, const char *new_) {
 		return -1;
 	if (close(to) != 0)
 		return -1;
+
+	struct stat s;
+	if (stat(path, &s) != 0)
+		return -1;
+
+	chmod(new_, s.st_mode);
 
 	return 0;
 #endif

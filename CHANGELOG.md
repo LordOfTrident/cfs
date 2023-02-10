@@ -8,4 +8,5 @@
 - `1.3.0`: Add support for C++
 - `1.4.0`: Add FS_JOIN_PATH
 - `1.5.0`: Add FOREACH_IN_DIR
-- `1.5.0`: Add fs_replace_ext
+- `1.6.0`: Add fs_replace_ext
+- `1.6.1`: Make fs_copy also copy the mode on linux
