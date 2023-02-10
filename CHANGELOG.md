@@ -10,3 +10,5 @@
 - `1.5.0`: Add FOREACH_IN_DIR
 - `1.6.0`: Add fs_replace_ext
 - `1.6.1`: Make fs_copy also copy the mode on linux
+- `1.6.2`: Rename fs_copy to fs_copy_file and fs_move to fs_move_file, make fs_copy_file remove
+           the copy if it already exists and recopy
