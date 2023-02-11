@@ -12,3 +12,4 @@
 - `1.6.1`: Make fs_copy also copy the mode on linux
 - `1.6.2`: Rename fs_copy to fs_copy_file and fs_move to fs_move_file, make fs_copy_file remove
            the copy if it already exists and recopy
+- `1.7.2`: Add fs_time

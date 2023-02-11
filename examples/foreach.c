@@ -1,5 +1,5 @@
 #include <stdio.h>  /* printf, stderr, fprintf */
-#include <stdlib.h> /* exit, EXIT_FAILURE, EXIT_SUCCESS */
+#include <stdlib.h> /* EXIT_FAILURE, EXIT_SUCCESS */
 
 #define CFS_IMPLEMENTATION
 #include "../cfs.h"
